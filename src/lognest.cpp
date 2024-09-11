@@ -48,13 +48,17 @@ std::string LogNest::get_log_level_string(LogNest::LogType level) {
 
 void LogNest::print_to_file(std::string log_line) {
 
-    /*std::cout << "print_to_file called\n";*/
-
     auto now = std::chrono::system_clock::now();
 
     std::time_t now_c = std::chrono::system_clock::to_time_t(now);
 
     std::tm *local_time = std::localtime(&now_c);
+
+    /*padding boilerplate
+     * basically makes so numbers <10 start with a 0
+     * such as:
+     * 5 -> 05
+     * 11 -> 11 (unchanged)*/
 
     std::ostringstream day;
     day << std::setw(2) << std::setfill('0') << local_time->tm_mday;
