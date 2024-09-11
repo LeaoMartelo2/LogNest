@@ -6,8 +6,11 @@ Simple C++ library to easily make logs on to a file.
 
 ## Installing:
 `git clone https://github.com/LeaoMartelo2/LogNest`
+
 `cd LogNest/src`
+
 `sudo make install` 
+
 <small>(or install manually to your project if you know what you are doing)</small>
 
 # Usage:
