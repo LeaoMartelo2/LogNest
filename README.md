@@ -14,7 +14,7 @@ Simple C++ library to easily make logs on to a file.
 
 - To begin using the library, you'll need to create a logging object, you can have multiple of them, and they can even be channeled in to different files.
 `auto log_example = std::make_shared<LogNest>("latest.log", "[log_example]")`;
-	- here, the first argument (`latest.log`) defines where that object's logging will be channeled in to.
+	- here, the first argument (`latest.log`) defines the file that object's logging will be channeled in to (accepts path's).
 	- the second argument (`[log_example]`), will be the identifier of the logging object, in case there are multiple objects logging to the same file.
 	
 - Following the example given above, we can create a log using
