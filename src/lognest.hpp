@@ -11,6 +11,10 @@
 class LogNest {
 
     public:
+        LogNest(std::string filename, std::string identifier);
+        ~LogNest();
+
+    public:
         enum class LogType { LOG,
                              ERROR,
                              WARN,

@@ -2,6 +2,15 @@
 #include <chrono>
 #include <ctime>
 #include <fstream>
+#include <string>
+
+LogNest::LogNest(std::string filename, std::string identifier) {
+    set_log_file(filename);
+    set_log_level_identifier(identifier);
+}
+
+LogNest::~LogNest() {
+}
 
 void LogNest::set_log_file(std::string filename) {
 
@@ -16,18 +25,18 @@ std::string LogNest::get_log_level_string(LogNest::LogType level) {
 
     switch (level) {
     case LogNest::LogType::LOG:
-        return "[LOG]";
+        return "[LOG]  :";
         break;
 
     case LogNest::LogType::WARN:
-        return "[WARN]";
+        return "[WARN] :";
         break;
 
     case LogNest::LogType::ERROR:
-        return "[ERROR]";
+        return "[ERROR]:";
         break;
     case LogNest::LogType::DEBUG:
-        return "[DEBUG]";
+        return "[DEBUG]:";
         break;
 
     default:
@@ -36,6 +45,8 @@ std::string LogNest::get_log_level_string(LogNest::LogType level) {
 }
 
 void LogNest::print_to_file(std::string log_line) {
+
+    /*std::cout << "print_to_file called\n";*/
 
     auto now = std::chrono::system_clock::now();
 
@@ -50,16 +61,15 @@ void LogNest::print_to_file(std::string log_line) {
     int minute = local_time->tm_min;
     int second = local_time->tm_sec;
 
-    std::fstream file(log_file, std::ios::out);
+    std::fstream file(log_file, std::ios::app);
 
     if (!file.is_open()) {
         file.open(log_file, std::ios::out);
-
-        file << '[' << year << '/' << month << '/' << day << ']'
-             << '[' << hour << ':' << minute << ':' << second << ']'
-             << log_line << '\n';
-
-        file.close();
-        return;
     }
+
+    file << '[' << year << '/' << month << '/' << day << ']'
+         << '[' << hour << ':' << minute << ':' << second << ']'
+         << log_line << '\n';
+
+    file.close();
 }

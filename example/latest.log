@@ -1,0 +1,4 @@
+[2024/9/11][2:37:13][LogExample][LOG]  :Regular log 1
+[2024/9/11][2:37:13][LogExample][WARN] :Warn 2 Log 3
+[2024/9/11][2:37:13][LogExample][ERROR]:4 Error log
+[2024/9/11][2:37:13][LogExample][DEBUG]:Debug log
