@@ -1,0 +1,4 @@
+[2024/09/11][13:41:23][log_example][LOG]  :Normal Log with 1 argument: hello
+[2024/09/11][13:41:23][log_example][WARN] :Warn log with no arguments
+[2024/09/11][13:41:23][log_example][ERROR]:Error log with 2 arguments hello, world
+[2024/09/11][13:41:23][log_example][DEBUG]:Debug log with int arguments 123

@@ -1,4 +1,4 @@
-#include "../src/lognest.hpp"
+#include "../../src/lognest.hpp"
 #include <iostream>
 int main() {
 
