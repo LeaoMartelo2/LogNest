@@ -2,6 +2,8 @@
 #include <chrono>
 #include <ctime>
 #include <fstream>
+#include <iomanip>
+#include <sstream>
 #include <string>
 
 LogNest::LogNest(std::string filename, std::string identifier) {
@@ -54,12 +56,27 @@ void LogNest::print_to_file(std::string log_line) {
 
     std::tm *local_time = std::localtime(&now_c);
 
-    int day = local_time->tm_mday;
-    int month = local_time->tm_mon + 1;
+    std::ostringstream day;
+    day << std::setw(2) << std::setfill('0') << local_time->tm_mday;
+    std::string padded_day = day.str();
+
+    std::ostringstream month;
+    month << std::setw(2) << std::setfill('0') << local_time->tm_mon + 1;
+    std::string padded_month = month.str();
+
     int year = local_time->tm_year + 1900;
-    int hour = local_time->tm_hour;
-    int minute = local_time->tm_min;
-    int second = local_time->tm_sec;
+
+    std::ostringstream hour;
+    hour << std::setw(2) << std::setfill('0') << local_time->tm_hour;
+    std::string padded_hour = hour.str();
+
+    std::ostringstream minute;
+    minute << std::setw(2) << std::setfill('0') << local_time->tm_min;
+    std::string padded_minute = minute.str();
+
+    std::ostringstream second;
+    second << std::setw(2) << std::setfill('0') << local_time->tm_sec;
+    std::string padded_second = second.str();
 
     std::fstream file(log_file, std::ios::app);
 
@@ -67,8 +84,8 @@ void LogNest::print_to_file(std::string log_line) {
         file.open(log_file, std::ios::out);
     }
 
-    file << '[' << year << '/' << month << '/' << day << ']'
-         << '[' << hour << ':' << minute << ':' << second << ']'
+    file << '[' << year << '/' << padded_month << '/' << padded_day << ']'
+         << '[' << padded_hour << ':' << padded_minute << ':' << padded_second << ']'
          << log_line << '\n';
 
     file.close();
