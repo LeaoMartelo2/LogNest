@@ -2,6 +2,8 @@
 
 Simple C++ library to easily make logs on to a file.
 
+![image](example.png)
+
 ## Installing:
 `git clone https://github.com/LeaoMartelo2/LogNest`
 `cd LogNest/src`
