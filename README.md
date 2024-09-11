@@ -14,12 +14,11 @@ Simple C++ library to easily make logs on to a file.
 
 <small>(or install manually to your project if you know what you are doing)</small>
 
-`Requireaments:`
+##Requireaments:
 
+- fmt library
 
-    `fmt library`
-
-    `make (for facilitating the process)`
+- make (for facilitating the process)
 
 
 # Usage:
