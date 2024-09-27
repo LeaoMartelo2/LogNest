@@ -1,5 +1,4 @@
-
-- Simple C library to easily print logs to a file.
+# Simple single header C library to easily make log files 
 
 ![image](images/example.png)
 
