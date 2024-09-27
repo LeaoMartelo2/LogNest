@@ -12,7 +12,7 @@ Installing is as easy as:
 
     make && sudo make install
 
-<small>(this is a single header and translation unit header, you can add it dirrectly to your project, if you know what you are doing)</small>
+<small> (this is a single header and translation unit header, you can add it dirrectly to your project, if you know what you are doing) </small>
 
 # Usage:
 - The main header should be included: 
@@ -34,4 +34,7 @@ Installing is as easy as:
 	- They all accept formmating arguments (`%d, %f, etc`) just like `printf()`
 
 - Compile with `-lLogNest`
+    - As it is a statically linked library, it gets strapped to your application, so you don't need the final user to have it installed.
+    - The library itself its small enough to be worth it in to making static.
+
 
