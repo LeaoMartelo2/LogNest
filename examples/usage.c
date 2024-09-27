@@ -10,9 +10,15 @@ int main(void) {
         .filename = "latest.log",
     };
 
-    Log another = {.identifier = "another_channel", .filename = "not_latest.txt"};
+    Log another = {.identifier = "[another_channel]", .filename = "latest.log"};
 
-    log_trace(&log_example, "normal log with arguments at the end %d", 1);
+    /*Log another = {.identifier = "[another_channel]", .filename = "other_file.txt"};*/
+
+    log_trace(&log_example, "log_example");
+
+    log_warn(&another, "log another");
+    
+    
     log_warn(&log_example, "Warning with %d on the middle", 32);
     log_error(&log_example, "Error with no extra arguments");
     log_debug(&log_example, "debug example with x = %f", 3.14f);
