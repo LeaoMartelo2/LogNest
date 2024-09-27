@@ -1,15 +1,17 @@
 
-- Simple Clibrary to easily print logs to a file.
+- Simple C library to easily print logs to a file.
 
 ![image](images/example.png)
 
 ## Installing:
 
-`git clone https://github.com/LeaoMartelo2/LogNest`
+Installing is as easy as:
 
-`cd LogNest/src`
+    git clone https://github.com/LeaoMartelo2/LogNest
 
-`make && sudo make install` 
+    cd LogNest/src
+
+    make && sudo make install
 
 <small>(this is a single header and translation unit header, you can add it dirrectly to your project, if you know what you are doing)</small>
 
