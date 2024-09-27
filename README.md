@@ -33,5 +33,5 @@ Installing is as easy as:
 	- (`log_trace()`, `log_warn()`, `log_error()` and `log_debug()`)
 	- They all accept formmating arguments (`%d, %f, etc`) just like `printf()`
 
-- Compile with -lLogNest
+- Compile with `-lLogNest`
 
