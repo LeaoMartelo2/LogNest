@@ -1,4 +1,0 @@
-[2024/09/11][14:29:20][log_example][LOG]  :Normal Log with 1 argument: hello
-[2024/09/11][14:29:20][log_example][WARN] :Warn log with no arguments
-[2024/09/11][14:29:20][log_example][ERROR]:HELLO The arguments can, be anywhere on the message WORLD
-[2024/09/11][14:29:20][log_example][DEBUG]:With almost any type! int: 1 float: 5.4, char: h, std::string: HELLO

@@ -1,0 +1,4 @@
+[24/09/26][22:16:51][log_example][LOG]:normal log with arguments at the end 1
+[24/09/26][22:16:51][log_example][WARN]:Warning with 32 on the middle
+[24/09/26][22:16:51][log_example][ERROR]:Error with no extra arguments
+[24/09/26][22:16:51][log_example][DEBUG]:debug example with x = 3.140000
