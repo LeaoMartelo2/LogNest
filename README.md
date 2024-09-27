@@ -28,7 +28,7 @@
 - Following the example given above, we can create a log using
 `log_trace(&log_example, "Hello, World!");
 ;`
-	- You can use the provided log types, all of them have the prefix `LN`
+	- You can use the logging functions to write your info to the desired file.
 	- (`log_trace()`, `log_warn()`, `log_error()` and `log_debug()`)
 	- They all accept formmating arguments (`%d, %f, etc`) just like `printf()`
 
