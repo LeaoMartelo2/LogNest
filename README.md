@@ -20,7 +20,7 @@ Installing is as easy as:
 `#include <lognest/lognest.h>`
 
 - To begin using the library, you'll need to create a logging channel, you can have multiple of them, and they can be printed to the same file or not!.
--
+
 ![image](images/usage.png)
  
   - `.identifier` Defines what will be its identifier on the file.
