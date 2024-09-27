@@ -7,9 +7,9 @@
 
 Installing is as easy as:
 
-    git clone https://github.com/LeaoMartelo2/LogNest
+    git clone https://github.com/LeaoMartelo2/lognest
 
-    cd LogNest/src
+    cd lognest/src
 
     make && sudo make install
 
