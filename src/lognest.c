@@ -1,23 +1,45 @@
 #include "lognest.h"
+#include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 
+#define TIMESTAMP_BUFFER_MAX_SIZE 20
+/*#define LOG_BUFFER_MAX_SIZE 512*/
+
 void get_timestamp(char *buffer, size_t len) {
+
+    if (buffer == NULL || len < TIMESTAMP_BUFFER_MAX_SIZE) {
+        fprintf(stderr, "Timestamp Buffer was too small!\n");
+        return;
+    }
+
     time_t now = time(NULL);
     struct tm *t = localtime(&now);
+
+    if (t == NULL) {
+        fprintf(stderr, "Failed to get localtime!\n");
+        return;
+    }
+
     strftime(buffer, len, "[%y/%m/%d][%H:%M:%S]", t);
 }
 
 void log_message(Log *log, const char *level, const char *format, va_list args) {
 
-    FILE *file = fopen(log->filename, "a"); // a = append, apparently
-    if (file == NULL) {
-        perror("ERROR OPPENING FILE");
+    if (log == NULL || log->filename == NULL || level == NULL || format == NULL) {
+        fprintf(stderr, "Something was NULL on log_message()\n");
         return;
     }
 
-    char timestamp[100];
+    FILE *file = fopen(log->filename, "a"); // a = append, apparently
+    if (file == NULL) {
+        fprintf(stderr, "Error trying to log to file, %s\n", strerror(errno));
+        return;
+    }
+
+    char *timestamp = NULL;
     get_timestamp(timestamp, sizeof(timestamp));
 
     fprintf(file, "%s%s%s:", timestamp, log->identifier, level);
