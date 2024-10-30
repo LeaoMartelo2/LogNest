@@ -5,12 +5,12 @@
 #include <string.h>
 #include <time.h>
 
-#define TIMESTAMP_BUFFER_MAX_SIZE 20
+#define TIMESTAMP_BUFFER_MAX_SIZE 2048
 /*#define LOG_BUFFER_MAX_SIZE 512*/
 
 void get_timestamp(char *buffer, size_t len) {
 
-    if (buffer == NULL || len < TIMESTAMP_BUFFER_MAX_SIZE) {
+    if (buffer == NULL || len > TIMESTAMP_BUFFER_MAX_SIZE) {
         fprintf(stderr, "Timestamp Buffer was too small!\n");
         return;
     }
@@ -39,8 +39,8 @@ void log_message(Log *log, const char *level, const char *format, va_list args) 
         return;
     }
 
-    char *timestamp = NULL;
-    get_timestamp(timestamp, sizeof(timestamp));
+    char timestamp[TIMESTAMP_BUFFER_MAX_SIZE] = {0};
+    get_timestamp(timestamp, TIMESTAMP_BUFFER_MAX_SIZE);
 
     fprintf(file, "%s%s%s:", timestamp, log->identifier, level);
 

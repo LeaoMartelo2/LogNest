@@ -16,7 +16,6 @@ install:
 
 	\cp -n libLogNest.a /usr/lib/ 
 
-	\mkdir -p /usr/include/lognest/
 	\cp -n lognest.h /usr/include/lognest.h
 
 uninstall:

@@ -1,4 +1,4 @@
-#include <lognest/lognest.h>
+#include <lognest.h>
 #include <stdio.h>
 
 int main(void) {
@@ -17,8 +17,7 @@ int main(void) {
     log_trace(&log_example, "log_example");
 
     log_warn(&another, "log another");
-    
-    
+
     log_warn(&log_example, "Warning with %d on the middle", 32);
     log_error(&log_example, "Error with no extra arguments");
     log_debug(&log_example, "debug example with x = %f", 3.14f);
