@@ -1,5 +1,0 @@
-[24/09/30][10:57:01][log_example][LOG]:log_example
-[24/09/30][10:57:01][another_channel][WARN]:log another
-[24/09/30][10:57:01][log_example][WARN]:Warning with 32 on the middle
-[24/09/30][10:57:01][log_example][ERROR]:Error with no extra arguments
-[24/09/30][10:57:01][log_example][DEBUG]:debug example with x = 3.140000

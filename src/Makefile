@@ -2,7 +2,7 @@ CC = gcc
 FLAGS = -Wall -Wextra 
 
 
-update: lognest.o
+lib: lognest.o
 	
 	ar rcs libLogNest.a $^
 
@@ -12,15 +12,14 @@ lognest.o: lognest.c
 clear: 
 	rm lognest.o libLogNest.a
 
-
 install:
 
 	\cp -n libLogNest.a /usr/lib/ 
 
 	\mkdir -p /usr/include/lognest/
-	\cp -n lognest.h /usr/include/lognest/lognest.h
+	\cp -n lognest.h /usr/include/lognest.h
 
 uninstall:
 	rm -f /usr/lib/libLogNest.a 
 
-	rm -rf /usr/include/lognest/
+	rm /usr/include/lognest.h
