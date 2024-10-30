@@ -42,7 +42,7 @@ void log_message(Log *log, const char *level, const char *format, va_list args) 
     char timestamp[TIMESTAMP_BUFFER_MAX_SIZE] = {0};
     get_timestamp(timestamp, TIMESTAMP_BUFFER_MAX_SIZE);
 
-    fprintf(file, "%s%s%s:", timestamp, log->identifier, level);
+    fprintf(file, "%s%s%s: ", timestamp, log->identifier, level);
 
     vfprintf(file, format, args);
 
