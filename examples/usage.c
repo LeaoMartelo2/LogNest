@@ -1,4 +1,5 @@
-#include <lognest.h>
+#define LOGNEST_IMPLEMENTATION
+#include "lognest.h"
 #include <stdio.h>
 
 int main(void) {
