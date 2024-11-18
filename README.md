@@ -8,7 +8,7 @@
 - You need to remind that only including the file serves as forward declaring
 - for the library to serve as implementation, include: `#define LOGNEST_IMPLEMENTATION` before the `#include`
 
-# Is also provided a installed library version, you can take a look on how do use that version if it fits your needs below:
+## Is also provided a installed library version, you can take a look on how do use that version if it fits your needs below:
 
 
 Installing is as easy as:
