@@ -5,8 +5,8 @@
 ## Installing:
 
 - You can just grab the lognest.h file and add it to your project,
-- You need to remind that only including the file serves as forward declaring
-- for the library to serve as implementation, include: `#define LOGNEST_IMPLEMENTATION` before the `#include`
+- You need to remember that only including the file serves as forward declaring/API
+- for the library to serve as implementation, add: `#define LOGNEST_IMPLEMENTATION` before the `#include`
 
 ## Is also provided a installed library version, you can take a look on how do use that version if it fits your needs below:
 
