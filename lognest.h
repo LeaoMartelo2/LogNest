@@ -1,45 +1,33 @@
-#ifndef LOGNEST_H
-#define LOGNEST_H
+#ifndef LOGNEST_H_
+#define LOGNEST_H_
 
-#include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#define TIMESTAMP_BUFFER_MAX_SIZE 2048
 
-typedef struct Log {
-        const char *identifier;
-        const char *filename;
-} Log;
+void _lognest_trace_raw(const char *file, const char *format, ...);
+void _lognest_warn_raw(const char *file, const char *format, ...);
+void _lognest_error_raw(const char *file, const char *format, ...);
+void _lognest_debug_raw(const char *file, const char *format, ...);
 
-void log_message(Log *log, const char *level, const char *format, va_list args);
+#define lognest_trace(format, ...) _lognest_trace_raw(LOGNEST_FILE, format, ##__VA_ARGS__)
+#define lognest_warn(format, ...) _lognest_warn_raw(LOGNEST_FILE, format, ##__VA_ARGS__)
+#define lognest_error(format, ...) _lognest_error_raw(LOGNEST_FILE, format, ##__VA_ARGS__)
+#define lognest_debug(format, ...) _lognest_debug_raw(LOGNEST_FILE, format, ##__VA_ARGS__)
 
-void log_trace(Log *log, const char *format, ...);
-void log_warn(Log *log, const char *format, ...);
-void log_error(Log *log, const char *format, ...);
-void log_debug(Log *log, const char *format, ...);
+void lognest_to_file(const char *file, const char *level, const char *format, va_list args);
 
 void get_timestamp(char *buffer, size_t len);
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif // !LOGNEST_H
-
 #ifdef LOGNEST_IMPLEMENTATION
 
-#define TIMESTAMP_BUFFER_MAX_SIZE 2048
-/*#define LOG_BUFFER_MAX_SIZE 512*/
-
-void get_timestamp(char *buffer, size_t len) {
+inline void get_timestamp(char *buffer, size_t len) {
 
     if (buffer == NULL || len > TIMESTAMP_BUFFER_MAX_SIZE) {
-        fprintf(stderr, "Timestamp Buffer was too small!\n");
+        fprintf(stderr, "LogNest: timestamp buffer, was too small\n");
         return;
     }
 
@@ -47,76 +35,74 @@ void get_timestamp(char *buffer, size_t len) {
     struct tm *t = localtime(&now);
 
     if (t == NULL) {
-        fprintf(stderr, "Failed to get localtime!\n");
+        fprintf(stderr, "LogNest: failed to get localtime\n");
         return;
     }
 
     strftime(buffer, len, "[%y/%m/%d][%H:%M:%S]", t);
 }
 
-void log_message(Log *log, const char *level, const char *format, va_list args) {
+void lognest_to_file(const char *file, const char *level, const char *format, va_list args) {
 
-    if (log == NULL || log->filename == NULL || level == NULL || format == NULL) {
-        fprintf(stderr, "Something was NULL on log_message()\n");
+    if (file == NULL) {
+        fprintf(stderr, "LogNest: filename was recieved as NULL or invalid: value: %s\n", file);
         return;
     }
 
-    FILE *file = fopen(log->filename, "a"); // a = append, apparently
-    if (file == NULL) {
-        fprintf(stderr, "Error trying to log to file, %s\n", strerror(errno));
+    FILE *log_file = fopen(file, "a");
+    if (log_file == NULL) {
+        fprintf(stderr, "LogNest: error trying to open file %s", file);
         return;
     }
 
     char timestamp[TIMESTAMP_BUFFER_MAX_SIZE] = {0};
     get_timestamp(timestamp, TIMESTAMP_BUFFER_MAX_SIZE);
 
-    fprintf(file, "%s%s%s: ", timestamp, log->identifier, level);
+    fprintf(log_file, "%s%s: ", timestamp, level);
 
-    vfprintf(file, format, args);
+    vfprintf(log_file, format, args);
 
-    fprintf(file, "\n");
+    fprintf(log_file, "\n");
 
-    fclose(file);
+    fclose(log_file);
 }
 
-void log_trace(Log *log, const char *format, ...) {
+void _lognest_trace_raw(const char *file, const char *format, ...) {
+
     va_list args;
-
     va_start(args, format);
-
-    log_message(log, "[LOG]", format, args);
+    lognest_to_file(file, "[LOG]  ", format, args);
 
     va_end(args);
 }
 
-void log_warn(Log *log, const char *format, ...) {
+void _lognest_warn_raw(const char *file, const char *format, ...) {
+
     va_list args;
-
     va_start(args, format);
-
-    log_message(log, "[WARN]", format, args);
+    lognest_to_file(file, "[WARN] ", format, args);
 
     va_end(args);
 }
 
-void log_error(Log *log, const char *format, ...) {
+void _lognest_error_raw(const char *file, const char *format, ...) {
+
     va_list args;
-
     va_start(args, format);
-
-    log_message(log, "[ERROR]", format, args);
+    lognest_to_file(file, "[ERROR]", format, args);
 
     va_end(args);
 }
 
-void log_debug(Log *log, const char *format, ...) {
+void _lognest_debug_raw(const char *file, const char *format, ...) {
+
     va_list args;
-
     va_start(args, format);
-
-    log_message(log, "[DEBUG]", format, args);
+    lognest_to_file(file, "[DEBUG]", format, args);
 
     va_end(args);
 }
 
 #endif // LOGNEST_IMPLEMENTATION
+
+#endif // !LOGNEST_H_
