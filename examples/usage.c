@@ -1,5 +1,4 @@
 #define LOGNEST_IMPLEMENTATION
-#define LOGNEST_FILE "latest.log"
 #include "../lognest.h"
 
 int main(void) {
