@@ -2,13 +2,13 @@
 
 ## A "Header file only" library for logfiles made in C, with focus on simplicity
 
+![image](images/example2.png)
+
 ## Installing:
 
 ```
 wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 ```
-
-![image](images/example2.png)
 
 ## Usage:
 
