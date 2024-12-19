@@ -1,6 +1,6 @@
 # LogNest
 
-## A "Header file only" library for logfiles made in C, with focus on simplicity
+## A "Header file only" library for logging to files made in C, with focus on simplicity
 
 ![image](images/example2.png)
 
