@@ -1,3 +1,4 @@
+#define LOGNEST_DISABLE_DEBUG
 #define LOGNEST_IMPLEMENTATION
 #include "../lognest.h"
 
@@ -9,7 +10,9 @@ int main(void) {
 
     lognest_error("This is an error message: %s", "Something went wrong!");
 
-    lognest_debug("This is a debug message: %f", 3.14);
+    lognest_debug("This message wont show up!");
+
+    lognest_trace("This is a message without extra args!");
 
     return 0;
 }
