@@ -36,7 +36,7 @@ wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 
 ### LogNest 2.0 (May 7th, 2025)
 
-- Improved compiler compatibility by removing some parts of the code that i didn't knew were GNU extentions.
+- Improved compiler compatibility by removing some parts of the code that i didn't knew were GNU extensions.
 
 
 - Added new Macros for disabling a log level entirely
