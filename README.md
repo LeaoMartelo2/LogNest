@@ -14,6 +14,17 @@ wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 ## Usage:
 
 - Download `lognest.h` and add it to your project.
+- Any specific log level can be disabled with
+
+```c
+#define LOGNEST_DISABLE_TRACE
+#define LOGNEST_DISABLE_WARN
+#define LOGNEST_DISABLE_ERROR
+#define LOGNEST_DISABLE_DEBUG
+```
+
+(This has to be defined before the implementation define)
+
 - For the library to serve as implementation, add: `#define LOGNEST_IMPLEMENTATION` before the `#include`.
 - This also means you should only define the implementation in one file. Just including it serves as a header.
 - Optionally cuztomize the output path in `lognest.h`, by changing `#define LOGNEST_FILE "your/custom/path"`
@@ -30,7 +41,7 @@ wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 
 - Added new Macros for disabling a log level entirely
 
-you can disable any log level with:
+you can now disable any log level with:
 
 ```c
 #define LOGNEST_DISABLE_TRACE
