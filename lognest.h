@@ -9,7 +9,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #ifndef LOGNEST_H_
 #define LOGNEST_H_
 
-#define LOGNEST_VERSION "2.0.0"
+#define LOGNEST_VERSION "2.1.0"
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -20,10 +20,10 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 extern "C" {
 #endif // __cplusplus
 
-/* CHANGE WHERE THE LOGS GETS SENT
- * DEFAULT VALUE: "latest.log"
- * (PATH RELATIVE TO THE EXECUTABLE)*/
+/* If LOGNEST_FILE is not defined before the include, default to latest.log at the execution path */
+#ifndef LOGNEST_FILE
 #define LOGNEST_FILE "latest.log"
+#endif // LOGNEST_FILE
 
 #define TIMESTAMP_BUFFER_MAX_SIZE 2048
 
@@ -39,7 +39,7 @@ void _lognest_debug_raw(const char *file, const char *format, ...);
 
 void lognest_to_file(const char *file, const char *level, const char *format, va_list args);
 
-void get_timestamp(char *buffer, size_t len);
+void _lognest_get_timestamp(char *buffer, size_t len);
 
 #ifdef __cplusplus
 }
@@ -47,7 +47,7 @@ void get_timestamp(char *buffer, size_t len);
 
 #ifdef LOGNEST_IMPLEMENTATION
 
-inline void get_timestamp(char *buffer, size_t len) {
+inline void _lognest_get_timestamp(char *buffer, size_t len) {
 
     if (buffer == NULL || len > TIMESTAMP_BUFFER_MAX_SIZE) {
         fprintf(stderr, "LogNest: timestamp buffer, was too small\n");
@@ -78,10 +78,19 @@ void lognest_to_file(const char *file, const char *level, const char *format, va
         return;
     }
 
-    char timestamp[TIMESTAMP_BUFFER_MAX_SIZE] = {0};
-    get_timestamp(timestamp, TIMESTAMP_BUFFER_MAX_SIZE);
 
-    fprintf(log_file, "%s%s: ", timestamp, level);
+    /* disable timestamp */
+#ifndef LOGNEST_DISABLE_TIMESTAMP
+
+    char timestamp[TIMESTAMP_BUFFER_MAX_SIZE] = {0};
+    _lognest_get_timestamp(timestamp, TIMESTAMP_BUFFER_MAX_SIZE);
+
+    fprintf(log_file, "%s", timestamp);
+
+
+#endif // LOGNEST_DISABLE_TIMESTAMP
+
+    fprintf(log_file, "%s: ", level);
 
     vfprintf(log_file, format, args);
 

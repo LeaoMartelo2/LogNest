@@ -14,7 +14,7 @@ wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 ## Usage:
 
 - Download `lognest.h` and add it to your project.
-- Any specific log level can be disabled with
+- Any specific log level can be disabled with:
 
 ```c
 #define LOGNEST_DISABLE_TRACE
@@ -23,16 +23,52 @@ wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 #define LOGNEST_DISABLE_DEBUG
 ```
 
-(This has to be defined before the implementation define)
+- Optionally change where the log file is sent to  (default: "latest.log") with:
+
+```c 
+#define LOGNEST_FILE "path/to/log/filename.log"
+```
+
+- Optionally disable the log's timestamp with:
+
+```c 
+#define LOGNEST_DISABLE_TIMESTAMP
+```
+
+(All configuration defines must come before the implementation define)
 
 - For the library to serve as implementation, add: `#define LOGNEST_IMPLEMENTATION` before the `#include`.
 - This also means you should only define the implementation in one file. Just including it serves as a header.
-- Optionally cuztomize the output path in `lognest.h`, by changing `#define LOGNEST_FILE "your/custom/path"`
-- The path is relative to the executable
 
 ![image](images/usage2.png)
 
 ## Updates:
+
+
+### LogNest 2.1 (August 1st, 2025)
+
+- Renamed some internal functions to avoid name hogging.
+- Added the ability to disable the `Timestamp` on logging.
+
+use: 
+```c 
+#define LOGNEST_DISABLE_TIMESTAMP
+```
+
+before defining the implementation.
+
+
+- Fixed some UX around changing the file being logged to.
+
+you can now do:
+
+```c 
+#define LOGNEST_FILE "path/to/log/filename.log"
+```
+before defining the implementation
+
+
+
 
 ### LogNest 2.0 (May 7th, 2025)
 

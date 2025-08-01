@@ -1,4 +1,6 @@
 #define LOGNEST_DISABLE_DEBUG
+#define LOGNEST_DISABLE_TIMESTAMP
+#define LOGNEST_FILE "example.log"
 #define LOGNEST_IMPLEMENTATION
 #include "../lognest.h"
 
@@ -16,3 +18,8 @@ int main(void) {
 
     return 0;
 }
+
+
+
+
+
