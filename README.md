@@ -23,6 +23,13 @@ wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 #define LOGNEST_DISABLE_DEBUG
 ```
 
+- Change the log type indicator prefix with:
+
+```c 
+#define LOGNEST_<TRACE/WARN/ERROR/DEBUG>_PREFIX "<custom prefix>"
+```
+- The `[]` around the type must also be included here.
+
 - Optionally change where the log file is sent to  (default: "latest.log") with:
 
 ```c 
@@ -37,12 +44,23 @@ wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 
 (All configuration defines must come before the implementation define)
 
-- For the library to serve as implementation, add: `#define LOGNEST_IMPLEMENTATION` before the `#include`.
-- This also means you should only define the implementation in one file. Just including it serves as a header.
+- For the library to serve as implementation, add: `#define LOGNEST_IMPLEMENTATION` before finally `#include`-ing the file.
+- Only add the `Implementation` define to a single file, adding the `.h` to multiple files is ok.
 
 ![image](images/usage2.png)
 
 ## Updates:
+
+
+### LogNest 2.1.5 (August 15th, 2025)
+
+- Added `LOGNEST_API` macro (defaulted to `static inline`) to allow you to change how lognest functions are defined.
+
+- Added macros do change the prefix of the log level identifier, add this before the implementation define:
+
+```c 
+#define LOGNEST_<TRACE/WARN/ERROR/DEBUG>_PREFIX "<custom prefix goes here>"
+```
 
 
 ### LogNest 2.1 (August 1st, 2025)

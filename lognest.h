@@ -9,7 +9,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #ifndef LOGNEST_H_
 #define LOGNEST_H_
 
-#define LOGNEST_VERSION "2.1.0"
+#define LOGNEST_VERSION "2.1.5"
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -25,31 +25,59 @@ extern "C" {
 #define LOGNEST_FILE "latest.log"
 #endif // LOGNEST_FILE
 
+// default all functions to static inline, so they are stripped from the binary if unused
+#ifndef LOGNEST_API
+#define LOGNEST_API static inline
+#endif // LOGNEST_API
+
+// @LOG PREFIXEX
+
+#ifndef LOGNEST_TRACE_PREFIX
+#define LOGNEST_TRACE_PREFIX "[LOG]  "
+#endif // LOGNEST_TRACE_PREFIX
+
+#ifndef LOGNEST_WARN_PREFIX
+#define LOGNEST_WARN_PREFIX "[WARN]"
+#endif // LOGNEST_WARN_PREFIX
+
+#ifndef  LOGNEST_ERROR_PREFIX
+#define LOGNEST_ERROR_PREFIX "[ERROR]"
+#endif // LOGNEST_ERROR_PREFIX
+
+#ifndef LOGNEST_DEBUG_PREFIX
+#define LOGNEST_DEBUG_PREFIX "[DEBUG]"
+#endif // LOGNEST_DEBUG_PREFIX
+
 #define TIMESTAMP_BUFFER_MAX_SIZE 2048
 
-void _lognest_trace_raw(const char *file, const char *format, ...);
-void _lognest_warn_raw(const char *file, const char *format, ...);
-void _lognest_error_raw(const char *file, const char *format, ...);
-void _lognest_debug_raw(const char *file, const char *format, ...);
+LOGNEST_API void _lognest_trace_raw(const char *file, const char *format, ...);
+LOGNEST_API void _lognest_warn_raw(const char *file, const char *format, ...);
+LOGNEST_API void _lognest_error_raw(const char *file, const char *format, ...);
+LOGNEST_API void _lognest_debug_raw(const char *file, const char *format, ...);
 
 #define lognest_trace(...) _lognest_trace_raw(LOGNEST_FILE, __VA_ARGS__)
 #define lognest_warn(...) _lognest_warn_raw(LOGNEST_FILE, __VA_ARGS__)
 #define lognest_error(...) _lognest_error_raw(LOGNEST_FILE, __VA_ARGS__)
 #define lognest_debug(...) _lognest_debug_raw(LOGNEST_FILE, __VA_ARGS__)
 
-void lognest_to_file(const char *file, const char *level, const char *format, va_list args);
+LOGNEST_API void lognest_to_file(const char *file, const char *level, const char *format, va_list args);
 
-void _lognest_get_timestamp(char *buffer, size_t len);
+LOGNEST_API void _lognest_get_timestamp(char *buffer, size_t len);
 
 #ifdef __cplusplus
 }
 #endif // __cplusplus
+ 
+
+// DO NOT FORGET TO COMMENT THIS OUT BEFORE PUSHING
+#define LOGNEST_IMPLEMENTATION
 
 #ifdef LOGNEST_IMPLEMENTATION
 
-inline void _lognest_get_timestamp(char *buffer, size_t len) {
+LOGNEST_API void _lognest_get_timestamp(char *buffer, size_t len) {
 
     if (buffer == NULL || len > TIMESTAMP_BUFFER_MAX_SIZE) {
+	// just to make sure, 2kb for a date is way too much
         fprintf(stderr, "LogNest: timestamp buffer, was too small\n");
         return;
     }
@@ -62,10 +90,11 @@ inline void _lognest_get_timestamp(char *buffer, size_t len) {
         return;
     }
 
+
     strftime(buffer, len, "[%y/%m/%d][%H:%M:%S]", t);
 }
 
-void lognest_to_file(const char *file, const char *level, const char *format, va_list args) {
+LOGNEST_API void lognest_to_file(const char *file, const char *level, const char *format, va_list args) {
 
     if (file == NULL) {
         fprintf(stderr, "LogNest: filename was recieved as NULL or invalid: value: %s\n", file);
@@ -78,7 +107,6 @@ void lognest_to_file(const char *file, const char *level, const char *format, va
         return;
     }
 
-
     /* disable timestamp */
 #ifndef LOGNEST_DISABLE_TIMESTAMP
 
@@ -86,7 +114,6 @@ void lognest_to_file(const char *file, const char *level, const char *format, va
     _lognest_get_timestamp(timestamp, TIMESTAMP_BUFFER_MAX_SIZE);
 
     fprintf(log_file, "%s", timestamp);
-
 
 #endif // LOGNEST_DISABLE_TIMESTAMP
 
@@ -99,7 +126,7 @@ void lognest_to_file(const char *file, const char *level, const char *format, va
     fclose(log_file);
 }
 
-void _lognest_trace_raw(const char *file, const char *format, ...) {
+LOGNEST_API void _lognest_trace_raw(const char *file, const char *format, ...) {
 
 #ifdef LOGNEST_DISABLE_TRACE
     return;
@@ -107,12 +134,12 @@ void _lognest_trace_raw(const char *file, const char *format, ...) {
 
     va_list args;
     va_start(args, format);
-    lognest_to_file(file, "[LOG]  ", format, args);
+    lognest_to_file(file, LOGNEST_TRACE_PREFIX, format, args);
 
     va_end(args);
 }
 
-void _lognest_warn_raw(const char *file, const char *format, ...) {
+LOGNEST_API void _lognest_warn_raw(const char *file, const char *format, ...) {
 
 #ifdef LOGNEST_DISABLE_WARN
     return;
@@ -120,12 +147,12 @@ void _lognest_warn_raw(const char *file, const char *format, ...) {
 
     va_list args;
     va_start(args, format);
-    lognest_to_file(file, "[WARN] ", format, args);
+    lognest_to_file(file, LOGNEST_WARN_PREFIX, format, args);
 
     va_end(args);
 }
 
-void _lognest_error_raw(const char *file, const char *format, ...) {
+LOGNEST_API void _lognest_error_raw(const char *file, const char *format, ...) {
 
 #ifdef LOGNEST_DISABLE_ERROR
     return;
@@ -133,12 +160,12 @@ void _lognest_error_raw(const char *file, const char *format, ...) {
 
     va_list args;
     va_start(args, format);
-    lognest_to_file(file, "[ERROR]", format, args);
+    lognest_to_file(file, LOGNEST_WARN_PREFIX, format, args);
 
     va_end(args);
 }
 
-void _lognest_debug_raw(const char *file, const char *format, ...) {
+LOGNEST_API void _lognest_debug_raw(const char *file, const char *format, ...) {
 
 #ifdef LOGNEST_DISABLE_DEBUG
     return;
@@ -146,7 +173,7 @@ void _lognest_debug_raw(const char *file, const char *format, ...) {
 
     va_list args;
     va_start(args, format);
-    lognest_to_file(file, "[DEBUG]", format, args);
+    lognest_to_file(file, LOGNEST_DEBUG_PREFIX, format, args);
 
     va_end(args);
 }
