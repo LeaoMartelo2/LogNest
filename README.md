@@ -1,8 +1,9 @@
 # LogNest
 
-## A "Header file only" library for logging to files made in C, with focus on simplicity
+## A Simple yet customizable header only library for logging in C.
 
 ![image](images/example2.png)
+<sub>Image depicting the dafault configuration result</sub>
 
 ## Installing:
 
@@ -13,15 +14,21 @@ wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 
 ## Usage:
 
+(Please refer to the examples if needed)
+
 - Download `lognest.h` and add it to your project.
 - Any specific log level can be disabled with:
 
 ```c
-#define LOGNEST_DISABLE_TRACE
-#define LOGNEST_DISABLE_WARN
-#define LOGNEST_DISABLE_ERROR
-#define LOGNEST_DISABLE_DEBUG
+#define LOGNEST_DISABLE_<TRACE/WARN/ERROR/DEBUG>
 ```
+
+- Change the log type indicator prefix with:
+
+```c 
+#define LOGNEST_<TRACE/WARN/ERROR/DEBUG>_PREFIX "<custom prefix>"
+```
+- The separators (`[]`) around the type must also be included here.
 
 - Optionally change where the log file is sent to  (default: "latest.log") with:
 
@@ -29,65 +36,42 @@ wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 #define LOGNEST_FILE "path/to/log/filename.log"
 ```
 
-- Optionally disable the log's timestamp with:
+- Optionally disable the log's time or date of the message with:
 
 ```c 
 #define LOGNEST_DISABLE_TIMESTAMP
+/* or */
+#define LOGNEST_DISABLE_DATESTAMP
+```
+
+- Optionally allow crashing on error with:
+```c
+#define LOGNEST_ALLOW_CRASH
 ```
 
 (All configuration defines must come before the implementation define)
 
-- For the library to serve as implementation, add: `#define LOGNEST_IMPLEMENTATION` before the `#include`.
-- This also means you should only define the implementation in one file. Just including it serves as a header.
+- For the library to serve as implementation, add: `#define LOGNEST_IMPLEMENTATION` before finally `#include`-ing the file.
+- Only add the `Implementation` define to a single file, adding the `.h` to multiple files is ok.
 
 ![image](images/usage2.png)
 
-## Updates:
+## Latest update changes:
 
 
-### LogNest 2.1 (August 1st, 2025)
+### LogNest 2.1.5 
 
-- Renamed some internal functions to avoid name hogging.
-- Added the ability to disable the `Timestamp` on logging.
+- Added `LOGNEST_API` macro (defaulted to `static inline`) to allow you to change how lognest functions are defined.
 
-use: 
-```c 
-#define LOGNEST_DISABLE_TIMESTAMP
-```
-
-before defining the implementation.
-
-
-- Fixed some UX around changing the file being logged to.
-
-you can now do:
+- Added macros do change the prefix of the log level identifier, add this before the implementation define:
 
 ```c 
-#define LOGNEST_FILE "path/to/log/filename.log"
+#define LOGNEST_<TRACE/WARN/ERROR/DEBUG>_PREFIX "<custom prefix goes here>"
 ```
-before defining the implementation
 
-
-
-
-### LogNest 2.0 (May 7th, 2025)
-
-- Improved compiler compatibility by removing some parts of the code that i didn't knew were GNU extensions.
-
-
-- Added new Macros for disabling a log level entirely
-
-you can now disable any log level with:
-
+- Added split the macro to divide the timestamp do allow to individually disable the date-stamp with `#define LOGNEST_DISABLE_DATESTAMP`
+- Renamed some internal macros with common names to avoid name hogging.
+- Added a option to allow crashing on error:
 ```c
-#define LOGNEST_DISABLE_TRACE
-#define LOGNEST_DISABLE_WARN
-#define LOGNEST_DISABLE_ERROR
-#define LOGNEST_DISABLE_DEBUG
+#define LOGNEST_ALLOW_CRASH
 ```
-
-That has to be defined before the implementation define, that is already before the #include
-
-- Added a new macro that returns a c literal of the current LogNest version
-
-
