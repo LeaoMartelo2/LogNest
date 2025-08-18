@@ -1,6 +1,6 @@
 #define LOGNEST_DISABLE_DEBUG
 #define LOGNEST_WARN_PREFIX "[warning]"
-#define LOGNEST_DISABLE_TIMESTAMP
+#define LOGNEST_DISABLE_DATESTAMP
 #define LOGNEST_FILE "example.log"
 #define LOGNEST_IMPLEMENTATION
 #include "../lognest.h"
