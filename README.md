@@ -17,26 +17,34 @@ wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 (Please refer to the examples if needed)
 
 - Download `lognest.h` and add it to your project.
-- Any specific log level can be disabled with:
+- `#define` the settings for your program ONLY in one file.
+- Add `#define LOGNEST_IMPLEMENTATION` before including it ONLY in one file (the same you configured on).
+- `#include` lognest.h normally and in any other file you need.
+
+## Configuration:
+
+- Disable any specific log level with:
 
 ```c
 #define LOGNEST_DISABLE_<TRACE/WARN/ERROR/DEBUG>
 ```
+<sub> Pairs great with -DLOGNEST_DISABLE<LEVEL> on compile flags </sub>
 
-- Change the log type indicator prefix with:
-
+- Change any log level identifier prefix with :
 ```c 
 #define LOGNEST_<TRACE/WARN/ERROR/DEBUG>_PREFIX "<custom prefix>"
 ```
-- The separators (`[]`) around the type must also be included here.
+<sub> The separators (`[]`) around the type must also be included here. </sub>
 
-- Optionally change where the log file is sent to  (default: "latest.log") with:
+- Optionally change where the log file path with:
 
 ```c 
 #define LOGNEST_FILE "path/to/log/filename.log"
 ```
 
-- Optionally disable the log's time or date of the message with:
+<sub> Defaults to `latest.log` </sub>
+
+- Optionally disable the log's time or date of message with:
 
 ```c 
 #define LOGNEST_DISABLE_TIMESTAMP
@@ -49,29 +57,20 @@ wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 #define LOGNEST_ALLOW_CRASH
 ```
 
-(All configuration defines must come before the implementation define)
-
-- For the library to serve as implementation, add: `#define LOGNEST_IMPLEMENTATION` before finally `#include`-ing the file.
-- Only add the `Implementation` define to a single file, adding the `.h` to multiple files is ok.
+- Some other misc configurations can be changed with:
+```c 
+#define LOGNEST_ABORT()
+/* uses stdlib's abort() for crashing */
+#define LOGNEST_API
+/* added before every function definition, use it to add stuff like `static inline` on single file projects */
+```
 
 ![image](images/usage2.png)
 
 ## Latest update changes:
 
 
-### LogNest 2.1.5 
+### LogNest 2.1.6
 
-- Added `LOGNEST_API` macro (defaulted to `static inline`) to allow you to change how lognest functions are defined.
-
-- Added macros do change the prefix of the log level identifier, add this before the implementation define:
-
-```c 
-#define LOGNEST_<TRACE/WARN/ERROR/DEBUG>_PREFIX "<custom prefix goes here>"
-```
-
-- Added split the macro to divide the timestamp do allow to individually disable the date-stamp with `#define LOGNEST_DISABLE_DATESTAMP`
-- Renamed some internal macros with common names to avoid name hogging.
-- Added a option to allow crashing on error:
-```c
-#define LOGNEST_ALLOW_CRASH
-```
+- Fix issue with `LOGNEST_API` macro causing some issues with its defult behaviour, now its up to the user to enable it.
+- Add macro to replace force exiting / crashing on error function with your own.
