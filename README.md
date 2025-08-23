@@ -28,7 +28,7 @@ wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 ```c
 #define LOGNEST_DISABLE_<TRACE/WARN/ERROR/DEBUG>
 ```
-<sub> Pairs great with -DLOGNEST_DISABLE<LEVEL> on compile flags </sub>
+<sub> Pairs great with -DLOGNEST_DISABLE_<LEVEL> on compile flags </sub>
 
 - Change any log level identifier prefix with :
 ```c 
