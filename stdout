@@ -1,0 +1,4 @@
+[15:37:04][LOG]  : This is a trace message. Sample value: 100
+[15:37:04][warning]: This is a warn. Be careful!
+[15:37:04][warning]: This is an error message: Something went wrong!
+[15:37:04][LOG]  : This is a message without extra args!
