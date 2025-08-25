@@ -7,6 +7,9 @@
 
 ## Installing:
 
+>[!NOTE]
+> This is a macro heavy library, do of that what you will.
+
 ```
 wget https://raw.githubusercontent.com/LeaoMartelo2/LogNest/main/lognest.h
 ```
